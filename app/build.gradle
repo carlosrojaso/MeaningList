@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "co.gdgbogota.todoapp"
+        minSdkVersion 17
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile files('libs/commons-io-2.4.jar')
+
+    compile 'com.android.support:appcompat-v7:21.0.2' //Libreria para usar un RecyclerView
+    compile 'com.android.support:recyclerview-v7:21.0.0' // Librerias de terceros :
+    // Libreria para agregar un Floating Action Button
+    compile 'com.getbase:floatingactionbutton:1.2.1'
+    // Libreria para volver circular una Imagen
+    compile 'de.hdodenhof:circleimageview:1.2.1'
+
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+
+    }
