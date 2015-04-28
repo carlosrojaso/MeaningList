@@ -23,15 +23,16 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/commons-io-2.4.jar')
-
-    compile 'com.android.support:appcompat-v7:21.0.2' //Libreria para usar un RecyclerView
-    compile 'com.android.support:recyclerview-v7:21.0.0' // Librerias de terceros :
+    compile 'com.android.support:appcompat-v7:21.0.2'
+    //Libreria para usar un RecyclerView
+    compile 'com.android.support:recyclerview-v7:21.0.0'
+    // Librerias de terceros :
     // Libreria para agregar un Floating Action Button
     compile 'com.getbase:floatingactionbutton:1.2.1'
     // Libreria para volver circular una Imagen
     compile 'de.hdodenhof:circleimageview:1.2.1'
-
     compile 'com.parse.bolts:bolts-android:1.+'
-    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
-
-    }
+    compile fileTree(include: 'Parse-*.jar', dir: 'libs')
+    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile files('libs/ParseFacebookUtilsV4-1.9.1.jar')
+}

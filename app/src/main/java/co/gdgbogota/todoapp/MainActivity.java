@@ -1,5 +1,6 @@
 package co.gdgbogota.todoapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,12 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.parse.Parse;
+import com.parse.ParseObject;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -32,9 +29,9 @@ public class MainActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
 
         // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(this);
 
-        Parse.initialize(this, "Y5NdFk1wqtgHi9qkc0lInFeEydyIFym3rZyPpVbL", "feLnPrBwBA8fxNpAbjcXa66OnxIF4v94zZojzGkw");
+        
 
 
         lvItems = (ListView) findViewById(R.id.lvItems);
@@ -47,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
         //items.add("Second Item");
 
         setupListViewListener();
-        toolbar.setTitle("TodoApp");
+        toolbar.setTitle("Meaning List");
         setSupportActionBar(toolbar);
 
 
@@ -77,8 +74,14 @@ public class MainActivity extends ActionBarActivity {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
+        ParseObject item = new ParseObject("Items");
+        item.put("userId",10287654);
+        item.put("indexId",items.size());
+        item.put("value",itemText);
+        item.pinInBackground();
         etNewItem.setText("");
-        writeItems();
+
+        //writeItems();
     }
 
 
@@ -98,6 +101,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent g = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(g);
             return true;
         }
 
@@ -105,22 +110,24 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void readItems() {
-        File filesDir = getFilesDir();
+        /*File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
         try {
             items = new ArrayList<String>(FileUtils.readLines(todoFile));
         } catch (IOException e) {
             items = new ArrayList<String>();
-        }
+        }*/
     }
 
     private void writeItems() {
-        File filesDir = getFilesDir();
+        /*File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
         try {
             FileUtils.writeLines(todoFile, items);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+
+
     }
 }

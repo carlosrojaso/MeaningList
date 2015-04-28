@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">Todoapp</string>
+    <string name="app_name">Meaning List</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="action_settings">Logout</string>
+    <string name="title_activity_login">Login</string>
+
+    <string name="facebook_app_id">739511106167500</string>
+    <string name="title_activity_user_details">UserDetailsActivity</string>
+    <string name="login_intro">Check out your Facebook profile by logging in with the button below!</string>
+    <string name="gender">Gender</string>
+    <string name="email">Email</string>
 </resources>
