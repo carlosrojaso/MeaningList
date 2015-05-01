@@ -3,7 +3,6 @@ package co.gdgbogota.todoapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -37,7 +36,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                Toast.makeText(getApplicationContext(), loginResult.getAccessToken().getUserId(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), loginResult.getAccessToken().getUserId(), Toast.LENGTH_LONG).show();
                 //setContentView(R.layout.activity_main);
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, loginResult.getAccessToken().getUserId());
