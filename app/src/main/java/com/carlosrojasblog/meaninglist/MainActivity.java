@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
 
         Parse.initialize(this, "Y5NdFk1wqtgHi9qkc0lInFeEydyIFym3rZyPpVbL", "feLnPrBwBA8fxNpAbjcXa66OnxIF4v94zZojzGkw");
 
-        String userid = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE);
+        userid = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE);
         lvItems = (ListView) findViewById(R.id.lvItems);
         items = new ArrayList<String>();
         readItems();
