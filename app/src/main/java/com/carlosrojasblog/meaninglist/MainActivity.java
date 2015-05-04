@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +14,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.facebook.login.LoginManager;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -27,20 +29,22 @@ public class MainActivity extends ActionBarActivity {
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
     private String userid;
+    ParseObject fooItem = new ParseObject("item");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
-        setSupportActionBar(toolbar);
+
 
         // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "Y5NdFk1wqtgHi9qkc0lInFeEydyIFym3rZyPpVbL", "feLnPrBwBA8fxNpAbjcXa66OnxIF4v94zZojzGkw");
 
         userid = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE);
+        Log.i("User id",userid);
         lvItems = (ListView) findViewById(R.id.lvItems);
         items = new ArrayList<String>();
         readItems();
@@ -49,7 +53,8 @@ public class MainActivity extends ActionBarActivity {
         lvItems.setAdapter(itemsAdapter);
 
         setupListViewListener();
-        toolbar.setTitle("TodoApp");
+        toolbar.setTitle("MeaningList");
+        setSupportActionBar(toolbar);
 
     }
 
@@ -59,9 +64,27 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter,
                                                    View item, int pos, long id) {
+                        //Log.i("tmpValue=",items.get(pos));
+
+                        //removing
+                        ParseQuery query = new ParseQuery("item");
+                        query.whereEqualTo("value", items.get(pos));
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> object, ParseException e) {
+                                if (e == null) {
+                                    //Log.d("score", "Retrieved " + testList.size() + " test objects");
+
+                                        ParseObject tempTest = object.get(0);
+                                        tempTest.deleteInBackground();
+
+                                } else {
+                                    Log.d("object", "Error: " + e.getMessage());
+                                }
+                            }
+                        });
+
                         items.remove(pos);
                         itemsAdapter.notifyDataSetChanged();
-                        writeItems(); // <---- Add this line
                         return true;
                     }
 
@@ -73,7 +96,11 @@ public class MainActivity extends ActionBarActivity {
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
-        writeItems(); // <---- Add this line
+
+        //ParseObject fooItem = new ParseObject("item");
+        fooItem.put("userId", userid);
+        fooItem.put("value", itemText);
+        fooItem.saveInBackground();
     }
 
 
@@ -107,22 +134,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<String>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            items = new ArrayList<String>();
-        }
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("item");
+        query.whereEqualTo("userId", userid);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + objects.size() + " items");
+
+                    for (int i = 0; i < objects.size(); i++) {
+                        Object object = objects.get(i);
+                        String name = ((ParseObject) object).getString("value").toString();
+                        itemsAdapter.add(name);
+                    }
+                    itemsAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 
-    private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            FileUtils.writeLines(todoFile, items);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

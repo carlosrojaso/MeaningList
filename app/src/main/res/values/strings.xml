@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Meaning List</string>
+    <string name="app_name">MeaningList</string>
 
     <string name="action_settings">Logout</string>
     <string name="title_activity_login">Login</string>
