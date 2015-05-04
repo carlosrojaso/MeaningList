@@ -15,3 +15,15 @@ Mobile
 Tablet
 
 ![](/img/img_2.png)
+
+## Release.
+
+Download here: <a href="http://j.mp/1FJS0ZX" target="_blank">APK Signed</a>
+
+## References.
+
+<a href="https://developers.facebook.com/docs/facebook-login/android/v2.3" target="_blank">Facebook Login</a>
+
+<a href="https://www.parse.com/docs/android_guide" target="_blank">Parse Android</a>
+
+<a href="http://j.mp/1DO9mix" target="_blank">Material Design in Android</a>
