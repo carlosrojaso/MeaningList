@@ -3,7 +3,9 @@ package com.carlosrojasblog.meaninglist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -12,11 +14,14 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 
+
 public class LoginActivity extends ActionBarActivity {
     public final static String EXTRA_MESSAGE = "co.carlosrojasblog.meaninglist.MESSAGE";
 
     private LoginButton facebookButton;
     private CallbackManager callbackManager;
+    private AccessToken accessToken;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +32,13 @@ public class LoginActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_login);
 
+
+
         facebookButton = (LoginButton) findViewById(R.id.facebook_button);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+
 
         facebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -46,12 +54,12 @@ public class LoginActivity extends ActionBarActivity {
 
             @Override
             public void onCancel() {
-                // App code
+                Log.v("LoginActivity", "cancel");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
+                Log.v("LoginActivity", exception.getCause().toString());
             }
         });
     }
@@ -61,5 +69,9 @@ public class LoginActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
+
 
 }
