@@ -3,6 +3,8 @@ package com.carlosrojasblog.meaninglist;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -246,6 +248,8 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+
+
     private class MyAdapter extends ArrayAdapter {
         private List<String> items;
         private LayoutInflater inflater;
@@ -278,6 +282,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
+
 
     class MiTarea extends AsyncTask<JSONObject, Void, JSONObject> {
         private ProgressDialog pDialog;
