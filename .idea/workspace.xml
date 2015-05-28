@@ -25,14 +25,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.carlosrojasblog.meaninglist" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66d98dc1-48e2-4cdc-9c6f-5162d6766d60" name="Default" comment="new additional layouts">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/notification_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MeaningList.iml" afterPath="$PROJECT_DIR$/MeaningList.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="66d98dc1-48e2-4cdc-9c6f-5162d6766d60" name="Default" comment="new additional layouts" />
     <ignored path="MeaningList.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -147,9 +140,10 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52305245">
-              <caret line="328" column="97" selection-start-line="328" selection-start-column="97" selection-end-line="328" selection-end-column="97" />
+            <state vertical-scroll-proportion="0.14950167">
+              <caret line="281" column="35" selection-start-line="281" selection-start-column="26" selection-end-line="281" selection-end-column="35" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#3557#4885#0" expanded="true" />
                 <element signature="e#4068#4700#0" expanded="true" />
                 <element signature="e#4699#4700#0" expanded="true" />
@@ -159,6 +153,16 @@
                 <element signature="e#6140#6141#0" expanded="true" />
                 <element signature="e#6325#6326#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -2023,6 +2027,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#3557#4885#0" expanded="true" />
             <element signature="e#4068#4700#0" expanded="true" />
             <element signature="e#4699#4700#0" expanded="true" />
@@ -2099,6 +2104,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#3557#4885#0" expanded="true" />
             <element signature="e#4068#4700#0" expanded="true" />
             <element signature="e#4699#4700#0" expanded="true" />
@@ -2175,6 +2181,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#3557#4885#0" expanded="true" />
             <element signature="e#4068#4700#0" expanded="true" />
             <element signature="e#4699#4700#0" expanded="true" />
@@ -2254,14 +2261,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.14">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2322,11 +2321,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52305245">
-          <caret line="328" column="97" selection-start-line="328" selection-start-column="97" selection-end-line="328" selection-end-column="97" />
+        <state vertical-scroll-proportion="0.14950167">
+          <caret line="281" column="35" selection-start-line="281" selection-start-column="26" selection-end-line="281" selection-end-column="35" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#3557#4885#0" expanded="true" />
             <element signature="e#4068#4700#0" expanded="true" />
             <element signature="e#4699#4700#0" expanded="true" />
