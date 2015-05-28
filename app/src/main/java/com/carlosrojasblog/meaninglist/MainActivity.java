@@ -1,7 +1,9 @@
 package com.carlosrojasblog.meaninglist;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.parse.FindCallback;
@@ -25,11 +28,26 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
+    int notificaciones =0;
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
@@ -37,11 +55,27 @@ public class MainActivity extends ActionBarActivity {
     private String userid;
     ParseObject fooItem = new ParseObject("item");
 
+    // Async
+
+    //URL to get JSON Array
+    private static String url = "http://www.iheartquotes.com/api/v1/random?format=json";
+
+    //JSON Node Names
+    //private static final String TAG_CONTENTS = "contents";
+    //private static final String TAG_ID = "id";
+    private static final String TAG_QUOTE = "quote";
+    private static final String TAG_AUTHOR = "source";
+
+    JSONArray user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
+
+        MiTarea tarea = new MiTarea();
+        tarea.execute();
 
 
         // Enable Local Datastore.
@@ -167,6 +201,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -235,6 +275,124 @@ public class MainActivity extends ActionBarActivity {
             return v;
         }
 
+
+
+    }
+
+    class MiTarea extends AsyncTask<JSONObject, Void, JSONObject> {
+        private ProgressDialog pDialog;
+
+        @Override
+        protected JSONObject doInBackground(JSONObject... params) {
+            JSONParser jParser = new JSONParser();
+
+            // Getting JSON from URL
+            JSONObject json = jParser.getJSONFromUrl(url);
+            return json;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Getting Data ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+        }
+
+        @Override
+
+        protected void onPostExecute(JSONObject json) {
+            pDialog.dismiss();
+            try {
+                // Getting JSON Array
+                //JSONObject userjson = (JSONObject) json;
+                //JSONObject c = json.getJSONObject(TAG_CONTENTS);
+
+                //JSONObject c = user.getJSONObject(0);
+
+                // Storing  JSON item in a Variable
+                //String responsejson = json.toString();
+
+                //JSONObject etiq = c.getJSONObject("tags");
+                //String id = json.getString(TAG_ID);
+                String nametxt = json.getString(TAG_QUOTE);
+                String emailtxt = json.getString(TAG_AUTHOR);
+
+                //Set JSON Data in TextView
+                Log.v("respuesta JSON", "ID: " + "Name: " + nametxt + " Email: " + emailtxt);
+                //Log.v("respuesta JSON", "JSON: " +responsejson);
+
+                Toast toast = Toast.makeText(getApplicationContext(), nametxt, Toast.LENGTH_SHORT);
+                toast.show();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private static class JSONParser {
+
+        static InputStream is = null;
+        static JSONObject jObj = null;
+        static String json = "";
+
+        // constructor
+        public JSONParser() {
+
+        }
+
+        public JSONObject getJSONFromUrl(String url) {
+
+            // Making HTTP request
+            try {
+                // defaultHttpClient
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost(url);
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpEntity httpEntity = httpResponse.getEntity();
+                is = httpEntity.getContent();
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        is, "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "n");
+                }
+                is.close();
+                json = sb.toString();
+            } catch (Exception e) {
+                Log.e("Buffer Error", "Error converting result " + e.toString());
+            }
+
+            // try parse the string to a JSON object
+            try {
+                jObj = new JSONObject(json);
+            } catch (JSONException e) {
+                Log.e("JSON Parser", "Error parsing data " + e.toString());
+            }
+
+            // return JSON String
+            return jObj;
+
+        }
     }
 
 
