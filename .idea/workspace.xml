@@ -26,7 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66d98dc1-48e2-4cdc-9c6f-5162d6766d60" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Android+Fundamentals+Project+Self-Evaluation.docx" afterPath="$PROJECT_DIR$/Android+Fundamentals+Project+Self-Evaluation.docx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MeaningList.iws" />
@@ -74,8 +74,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6677266">
-              <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.85850555">
+              <caret line="138" column="52" selection-start-line="138" selection-start-column="52" selection-end-line="138" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -2347,8 +2347,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/carlosrojasblog/meaninglist/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6677266">
-          <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.85850555">
+          <caret line="138" column="52" selection-start-line="138" selection-start-column="52" selection-end-line="138" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
