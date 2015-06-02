@@ -1,12 +1,17 @@
 package com.carlosrojasblog.meaninglist;
 
+
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -48,15 +54,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
-    int notificaciones =0;
+public class MainActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    //int notificaciones =0;
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
     private GridView gridView;
     private String userid;
     ParseObject fooItem = new ParseObject("item");
-
+    CursorAdapter mAdapter;
+    private static final int URL_LOADER = 0;
     // Async
 
     //URL to get JSON Array
@@ -106,12 +113,41 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
+        try {
+            getSupportLoaderManager().initLoader(URL_LOADER, null, this);
+        }catch (Exception e){
+            Log.e("Excepcion:",e.toString());
+        }
         readItems();
 
 
         toolbar.setTitle("MeaningList");
         setSupportActionBar(toolbar);
 
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+
+        switch (i) {
+            case URL_LOADER:
+                // Returns a new CursorLoader
+                 return new DumbLoader(getApplicationContext());
+            default:
+                // An invalid id was passed in
+                return null;
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        // mAdapter is a CursorAdapter
+        mAdapter.changeCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        mAdapter.changeCursor(null);
     }
 
     private void setupGridViewListener() {
@@ -248,6 +284,45 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    public class DumbLoader extends android.support.v4.content.CursorLoader {
+        private static final String TAG = "DumbLoader";
+
+        public DumbLoader(Context context) {
+            super(context);
+        }
+
+        @Override
+        public Cursor loadInBackground() {
+            // this is just a simple query, could be anything that gets a cursor
+            String[] projection = new String[] {
+                    FrasesProvider.Frases._ID,
+                    FrasesProvider.Frases.COL_DESC,
+            };
+
+            Uri frasesUri =  FrasesProvider.CONTENT_URI;
+            Log.v("Uri:",frasesUri.toString());
+
+            ContentResolver cr = getContentResolver();
+
+            Cursor cur = cr.query(frasesUri,projection,null,null,null);
+
+            try{
+                if(cur.moveToFirst())
+                {
+                    int colDes = cur.getColumnIndex(FrasesProvider.Frases.COL_DESC);
+                    Toast toast = Toast.makeText(getApplicationContext(), cur.getString(colDes), Toast.LENGTH_SHORT);
+                    toast.show();
+                    Log.v("Valor contentProvider:",cur.getString(colDes));
+                }}
+            catch(Exception e){
+                Log.d("Excepcion:",e.toString());
+            }
+
+            return cur;
+        }
+    }
+
+
 
 
     private class MyAdapter extends ArrayAdapter {
@@ -331,8 +406,17 @@ public class MainActivity extends ActionBarActivity {
                 Log.v("respuesta JSON", "ID: " + "Name: " + nametxt + " Email: " + emailtxt);
                 //Log.v("respuesta JSON", "JSON: " +responsejson);
 
-                Toast toast = Toast.makeText(getApplicationContext(), nametxt, Toast.LENGTH_SHORT);
-                toast.show();
+                Uri frasesUri =  FrasesProvider.CONTENT_URI;
+                ContentResolver cr = getContentResolver();
+                ContentValues values = new ContentValues();
+
+                values.put(FrasesProvider.Frases.COL_DESC, nametxt);
+
+                cr.insert(FrasesProvider.CONTENT_URI,values);
+
+
+                //Toast toast = Toast.makeText(getApplicationContext(), nametxt, Toast.LENGTH_SHORT);
+                //toast.show();
 
 
             } catch (Exception e) {
@@ -399,6 +483,8 @@ public class MainActivity extends ActionBarActivity {
 
         }
     }
+
+
 
 
 }

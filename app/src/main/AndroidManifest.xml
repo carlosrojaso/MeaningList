@@ -33,6 +33,10 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <provider android:name="FrasesProvider"
+            android:authorities="com.carlosrojasblog.meaninglist"/>
+
+
     </application>
 
 </manifest>
