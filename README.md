@@ -18,7 +18,7 @@ Tablet
 
 ## Release.
 
-Download here: <a href="http://j.mp/1Kr86HE" target="_blank">APK Signed</a>
+Download here: <a href="https://drive.google.com/file/d/0B1n2c5j2cFiEVXMyUG0tQTRkY2M/view?usp=sharing" target="_blank">APK Signed</a>
 
 ## References.
 
