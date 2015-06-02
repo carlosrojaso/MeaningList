@@ -114,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
         }
 
         try {
-            getSupportLoaderManager().initLoader(URL_LOADER, null, this);
+            getSupportLoaderManager().initLoader(URL_LOADER, null, this); // Start Loader
         }catch (Exception e){
             Log.e("Excepcion:",e.toString());
         }
@@ -126,13 +126,42 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
 
     }
 
+    // Loader Methods
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
         switch (i) {
             case URL_LOADER:
                 // Returns a new CursorLoader
-                 return new DumbLoader(getApplicationContext());
+
+                // this is just a simple query, could be anything that gets a cursor
+                String[] projection = new String[] {
+                        FrasesProvider.Frases._ID,
+                        FrasesProvider.Frases.COL_DESC,
+                };
+
+                Uri frasesUri =  FrasesProvider.CONTENT_URI;
+                Log.v("Uri:",frasesUri.toString());
+
+                ContentResolver cr = getContentResolver();
+
+                Cursor cur = cr.query(frasesUri,projection,null,null,null);
+
+                try{
+                    if(cur.moveToFirst())
+                    {
+                        int colDes = cur.getColumnIndex(FrasesProvider.Frases.COL_DESC);
+                        Toast toast = Toast.makeText(getApplicationContext(), cur.getString(colDes), Toast.LENGTH_SHORT);
+                        toast.show();
+                        Log.v("Valor contentProvider:",cur.getString(colDes));
+                    }}
+                catch(Exception e){
+                    Log.d("Excepcion:",e.toString());
+                }
+
+                return (Loader<Cursor>) cur;
+
             default:
                 // An invalid id was passed in
                 return null;
@@ -149,6 +178,9 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mAdapter.changeCursor(null);
     }
+
+
+    // End Loader
 
     private void setupGridViewListener() {
 
@@ -283,46 +315,6 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
             }
         });
     }
-
-    public class DumbLoader extends android.support.v4.content.CursorLoader {
-        private static final String TAG = "DumbLoader";
-
-        public DumbLoader(Context context) {
-            super(context);
-        }
-
-        @Override
-        public Cursor loadInBackground() {
-            // this is just a simple query, could be anything that gets a cursor
-            String[] projection = new String[] {
-                    FrasesProvider.Frases._ID,
-                    FrasesProvider.Frases.COL_DESC,
-            };
-
-            Uri frasesUri =  FrasesProvider.CONTENT_URI;
-            Log.v("Uri:",frasesUri.toString());
-
-            ContentResolver cr = getContentResolver();
-
-            Cursor cur = cr.query(frasesUri,projection,null,null,null);
-
-            try{
-                if(cur.moveToFirst())
-                {
-                    int colDes = cur.getColumnIndex(FrasesProvider.Frases.COL_DESC);
-                    Toast toast = Toast.makeText(getApplicationContext(), cur.getString(colDes), Toast.LENGTH_SHORT);
-                    toast.show();
-                    Log.v("Valor contentProvider:",cur.getString(colDes));
-                }}
-            catch(Exception e){
-                Log.d("Excepcion:",e.toString());
-            }
-
-            return cur;
-        }
-    }
-
-
 
 
     private class MyAdapter extends ArrayAdapter {
