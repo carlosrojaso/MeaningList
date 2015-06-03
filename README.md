@@ -1,29 +1,14 @@
-# MeaningList
+# Chrome Dev Summit site
 
-MeaningList is a way to focus in the meaningful things. You only need getting start with your facebook account and save your important goals.
+The site is based on Google AppEngine, so you'll need the [SDK and launcher](https://cloud.google.com/appengine/downloads).
 
-## Problem Description
+Once you have that, you'll need to:
 
-The day to day makes human beings forget the important things (Start that business, spend more time with your children, visit this special place in the world) is why we created this app.
+1. Install node.js.
+1. Install npm and sass.
+1. Run `npm install`.
+1. Run `grunt dev` during work and `grunt` to do a full build. (You can also do `grunt full` if you want to have images optimized via ImageOptim.)
 
-## Mockups.
+# License
 
-Mobile
-
-![](/img/img_1.png)
-
-Tablet
-
-![](/img/img_2.png)
-
-## Release.
-
-Download here: <a href="https://drive.google.com/file/d/0B1n2c5j2cFiEVXMyUG0tQTRkY2M/view?usp=sharing" target="_blank">APK Signed</a>
-
-## References.
-
-<a href="https://developers.facebook.com/docs/facebook-login/android/v2.3" target="_blank">Facebook Login</a>
-
-<a href="https://www.parse.com/docs/android_guide" target="_blank">Parse Android</a>
-
-<a href="http://j.mp/1DO9mix" target="_blank">Material Design in Android</a>
+Please see the LICENSE file.
