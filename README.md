@@ -18,8 +18,6 @@ Mobile
 
 Tablet
 
-![](/img/img_2.png)
-
 ![](/img/img_4.png)
 
 ![](/img/img_5.png)
