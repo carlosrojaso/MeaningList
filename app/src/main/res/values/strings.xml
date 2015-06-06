@@ -9,4 +9,8 @@
     <string name="login_intro">Check out your Facebook profile by logging in with the button below!</string>
     <string name="gender">Gender</string>
     <string name="email">Email</string>
+
+    <string name="deletemsg">Deleting Item. Are you sure?</string>
+    <string name="deleteyes">Yes</string>
+    <string name="deleteno">No</string>
 </resources>

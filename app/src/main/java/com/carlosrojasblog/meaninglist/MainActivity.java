@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -93,7 +95,7 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
         Parse.initialize(this, "Y5NdFk1wqtgHi9qkc0lInFeEydyIFym3rZyPpVbL", "feLnPrBwBA8fxNpAbjcXa66OnxIF4v94zZojzGkw");
 
         userid = getIntent().getStringExtra(LoginActivity.EXTRA_MESSAGE);
-        Log.i("User id", userid);
+        //Log.i("User id", userid);
         lvItems = (ListView) findViewById(R.id.lvItems);
         items = new ArrayList<String>();
 
@@ -221,28 +223,43 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View item, int pos, long id) {
+                                                   View item, final int pos, long id) {
                         //Log.i("tmpValue=",items.get(pos));
+                        final int position = pos;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage(R.string.deletemsg)
+                                .setPositiveButton(R.string.deleteyes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //removing
+                                        ParseQuery query = new ParseQuery("item");
+                                        query.whereEqualTo("value", items.get(position));
+                                        query.findInBackground(new FindCallback<ParseObject>() {
+                                            public void done(List<ParseObject> object, ParseException e) {
+                                                if (e == null) {
+                                                    //Log.d("score", "Retrieved " + testList.size() + " test objects");
 
-                        //removing
-                        ParseQuery query = new ParseQuery("item");
-                        query.whereEqualTo("value", items.get(pos));
-                        query.findInBackground(new FindCallback<ParseObject>() {
-                            public void done(List<ParseObject> object, ParseException e) {
-                                if (e == null) {
-                                    //Log.d("score", "Retrieved " + testList.size() + " test objects");
+                                                    ParseObject tempTest = object.get(0);
+                                                    tempTest.deleteInBackground();
 
-                                    ParseObject tempTest = object.get(0);
-                                    tempTest.deleteInBackground();
+                                                } else {
+                                                    Log.d("object", "Error: " + e.getMessage());
+                                                }
+                                            }
+                                        });
 
-                                } else {
-                                    Log.d("object", "Error: " + e.getMessage());
-                                }
-                            }
-                        });
+                                        items.remove(position);
+                                        itemsAdapter.notifyDataSetChanged();
+                                    }
+                                })
+                                .setNegativeButton(R.string.deleteno, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
 
-                        items.remove(pos);
-                        itemsAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                        // Create the AlertDialog object and return it
+                        builder.create().show();
+
+
                         return true;
                     }
 
@@ -257,8 +274,18 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
         etNewItem.setText("");
 
         //ParseObject fooItem = new ParseObject("item");
-        fooItem.put("userId", userid);
-        fooItem.put("value", itemText);
+        if(userid != null){
+
+            fooItem.put("userId", userid);
+
+        }
+
+        if(itemText != null){
+
+            fooItem.put("value", itemText);
+
+        }
+
         fooItem.saveInBackground();
     }
 
@@ -272,7 +299,6 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
         super.onSaveInstanceState(outState);
     }
 
