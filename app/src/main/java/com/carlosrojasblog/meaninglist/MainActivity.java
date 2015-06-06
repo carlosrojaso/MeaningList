@@ -270,10 +270,8 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
-        //itemsAdapter.notifyDataSetChanged();
         etNewItem.setText("");
 
-        //ParseObject fooItem = new ParseObject("item");
         if(userid != null){
 
             fooItem.put("userId", userid);
@@ -406,17 +404,7 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
             try {
-                // Getting JSON Array
-                //JSONObject userjson = (JSONObject) json;
-                //JSONObject c = json.getJSONObject(TAG_CONTENTS);
 
-                //JSONObject c = user.getJSONObject(0);
-
-                // Storing  JSON item in a Variable
-                //String responsejson = json.toString();
-
-                //JSONObject etiq = c.getJSONObject("tags");
-                //String id = json.getString(TAG_ID);
                 String nametxt = json.getString(TAG_QUOTE);
                 String emailtxt = json.getString(TAG_AUTHOR);
 
@@ -431,11 +419,7 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
                 values.put(FrasesProvider.Frases.COL_DESC, nametxt);
 
                 cr.insert(FrasesProvider.CONTENT_URI,values);
-
-
-                //Toast toast = Toast.makeText(getApplicationContext(), nametxt, Toast.LENGTH_SHORT);
-                //toast.show();
-
+                
 
             } catch (Exception e) {
                 e.printStackTrace();
