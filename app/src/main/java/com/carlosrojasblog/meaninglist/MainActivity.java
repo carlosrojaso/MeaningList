@@ -419,7 +419,7 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
                 values.put(FrasesProvider.Frases.COL_DESC, nametxt);
 
                 cr.insert(FrasesProvider.CONTENT_URI,values);
-                
+
 
             } catch (Exception e) {
                 e.printStackTrace();
