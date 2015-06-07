@@ -3,11 +3,8 @@
 
 # TEAM
 
-  <name> -- <role> -- <twitter>
+  Carlos Rojas -- Developer -- @carlosrojas_o
 
-# THANKS
-
-  <name>
 
 # TECHNOLOGY COLOPHON
 
